@@ -400,7 +400,6 @@ public class AaaStatisticsTest extends AaaTestBase {
 			
 			aaaManager.impl.handlePacketFromServer(null);
 			aaaManager.aaaStatisticsManager.calculatePacketRoundtripTime();
-			countAaaStatistics();
 			
 			// creating malformed packet
 			
@@ -422,47 +421,47 @@ public class AaaStatisticsTest extends AaaTestBase {
 	 */
 	public void countAaaStatistics() {
 
-		log.info(
+		log.debug(
 				"Checking the getAcceptResponsesRx " + aaaStatisticsManager.getAaaStats().getAcceptResponsesRx());
 		assertThat(aaaStatisticsManager.getAaaStats().getAcceptResponsesRx(), notNullValue());
 
-		log.info(
+		log.debug(
 				"Checking the getAccessRequestsTx " + aaaStatisticsManager.getAaaStats().getAccessRequestsTx());
 		assertThat(aaaStatisticsManager.getAaaStats().getAccessRequestsTx(), notNullValue());
 
-		log.info(
+		log.debug(
 				"Checking the getChallengeResponsesRx " + aaaStatisticsManager.getAaaStats().getChallengeResponsesRx());
 		assertThat(aaaStatisticsManager.getAaaStats().getChallengeResponsesRx(), notNullValue());
 
-		log.info(
+		log.debug(
 				"Checking the getDroppedResponsesRx " + aaaStatisticsManager.getAaaStats().getDroppedResponsesRx());
 		assertThat(aaaStatisticsManager.getAaaStats().getDroppedResponsesRx(), notNullValue());
 
-		log.info(
+		log.debug(
 				"Checking the getInvalidValidatorsRx " + aaaStatisticsManager.getAaaStats().getInvalidValidatorsRx());
 		assertThat(aaaStatisticsManager.getAaaStats().getInvalidValidatorsRx(), notNullValue());
 
-		log.info(
+		log.debug(
 				"Checking the getMalformedResponsesRx " + aaaStatisticsManager.getAaaStats().getMalformedResponsesRx());
 		assertThat(aaaStatisticsManager.getAaaStats().getMalformedResponsesRx(), notNullValue());
 
-		log.info("Checking the getPendingRequests " + aaaStatisticsManager.getAaaStats().getPendingRequests());
+		log.debug("Checking the getPendingRequests " + aaaStatisticsManager.getAaaStats().getPendingRequests());
 		assertThat(aaaStatisticsManager.getAaaStats().getPendingRequests(), notNullValue());
 
-		log.info(
+		log.debug(
 				"Checking the getRejectResponsesRx " + aaaStatisticsManager.getAaaStats().getRejectResponsesRx());
 		assertThat(aaaStatisticsManager.getAaaStats().getRejectResponsesRx(), notNullValue());
 
-		log.info("Checking the getRequestReTx " + aaaStatisticsManager.getAaaStats().getRequestReTx());
+		log.debug("Checking the getRequestReTx " + aaaStatisticsManager.getAaaStats().getRequestReTx());
 		assertThat(aaaStatisticsManager.getAaaStats().getRequestReTx(), notNullValue());
 
-		log.info("Checking the getRequestRttMilis " + aaaStatisticsManager.getAaaStats().getRequestRttMilis());
+		log.debug("Checking the getRequestRttMilis " + aaaStatisticsManager.getAaaStats().getRequestRttMilis());
 		assertThat(aaaStatisticsManager.getAaaStats().getRequestRttMilis(), notNullValue());
 
-		log.info("Checking the getUnknownServerRx " + aaaStatisticsManager.getAaaStats().getUnknownServerRx());
+		log.debug("Checking the getUnknownServerRx " + aaaStatisticsManager.getAaaStats().getUnknownServerRx());
 		assertThat(aaaStatisticsManager.getAaaStats().getUnknownServerRx(), notNullValue());
 
-		log.info("Checking the getUnknownTypeRx " + aaaStatisticsManager.getAaaStats().getUnknownTypeRx());
+		log.debug("Checking the getUnknownTypeRx " + aaaStatisticsManager.getAaaStats().getUnknownTypeRx());
 		assertThat(aaaStatisticsManager.getAaaStats().getUnknownTypeRx(), notNullValue());
 
 	}
@@ -495,6 +494,7 @@ public class AaaStatisticsTest extends AaaTestBase {
 				}
 			} catch (DeserializationException dex) {
 				aaaManager.aaaStatisticsManager.getAaaStats().increaseMalformedResponsesRx();
+				aaaStatisticsManager.getAaaStats().countDroppedResponsesRx();
 				log.error("Cannot deserialize packet", dex);
 			} catch (StateMachineException sme) {
 				log.error("Illegal state machine operation", sme);
